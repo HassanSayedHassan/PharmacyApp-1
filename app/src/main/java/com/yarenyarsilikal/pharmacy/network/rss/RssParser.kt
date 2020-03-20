@@ -39,7 +39,7 @@ class RSSParser(
         if (isParsed) {
             //BIND
 
-            rc.adapter = NewsAdapter(items)
+            rc.adapter = NewsAdapter(items, {})
             rc.layoutManager = LinearLayoutManager(c)
             // lv.adapter = CustomAdapter(c, articles)
         } else {

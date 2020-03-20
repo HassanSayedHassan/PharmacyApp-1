@@ -15,4 +15,9 @@
     <string name="menu_profile">Profil</string>
 
     <string name="title_logout">Çıkış Yap</string>
+    <string name="pharmacy_empty">Eczane Bulunamadı.</string>
+    <string name="news_empty">Haber Bulunamadı.</string>
+    <string name="general.close">Kapat</string>
+    <string name="choose_city">İl-İlçe Seçiniz</string>
+
 </resources>

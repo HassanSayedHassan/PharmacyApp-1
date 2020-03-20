@@ -61,6 +61,8 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:3.14.7"
     //glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+    //hawk
+    implementation "com.orhanobut:hawk:2.0.1"
 
 
 

@@ -5,6 +5,6 @@ enum class UrlType {
         override fun toString(): String = "https://www.donanimhaber.com/rss/tum/"
     },
     COLLECTAPI {
-        override fun toString(): String = "https://collectapi.com/tr/api/health/nobetci-eczane-api"
+        override fun toString(): String = "https://api.collectapi.com/health/"
     }
 }

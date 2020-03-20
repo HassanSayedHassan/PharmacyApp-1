@@ -5,11 +5,8 @@ data class RssItem(
     var title: String? = null,
     var description: String? = null,
     var date: String? = null,
-    var link: String? = null,
-    var enclosure: Enclosure? = null
+    var link: String? = null
 )
-
-data class Enclosure(var url: String? = null)
 
 
 

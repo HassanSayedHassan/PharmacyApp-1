@@ -13,9 +13,9 @@ class NewsViewHolder(parent: ViewGroup) :
             .inflate(R.layout.item_news, parent, false)
     ) {
 
-    fun bind(rssItem: RssItem) {
+    fun bind(rssItem: RssItem, onItemClickListener: (RssItem) -> Unit) {
 
-
+        itemView.setOnClickListener { onItemClickListener(rssItem) }
         itemView.imageViewNews.setImageResource(R.drawable.ic_instagram)
         itemView.textViewTitle.text = rssItem.title
         itemView.textViewDate.text = rssItem.date
