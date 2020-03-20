@@ -6,7 +6,7 @@ import com.yarenyarsilikal.pharmacy.network.model.RssItem
 
 class NewsAdapter(
     private val list: List<RssItem>,
-    private val onItemClickListener: (RssItem) -> Unit
+    private val onItemClickListener: (String) -> Unit
 ) :
     RecyclerView.Adapter<NewsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder =

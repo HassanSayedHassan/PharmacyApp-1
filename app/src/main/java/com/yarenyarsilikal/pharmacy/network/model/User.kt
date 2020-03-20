@@ -1,9 +1,10 @@
 package com.yarenyarsilikal.pharmacy.network.model
 
 data class User(
-    var picture: String,
-    var name: String,
-    var surname: String,
-    var email: String,
-    var password: String
+
+    var name: String? = null,
+    var surname: String? = null,
+    var email: String? = null,
+    var password: String? = null,
+    var picture: String? = null
 )

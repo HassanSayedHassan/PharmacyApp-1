@@ -1,11 +1,13 @@
 package com.yarenyarsilikal.pharmacy.network.rss
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.os.AsyncTask
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.yarenyarsilikal.pharmacy.R
 import com.yarenyarsilikal.pharmacy.network.model.RssItem
 import com.yarenyarsilikal.pharmacy.ui.news.adapter.NewsAdapter
 import org.xmlpull.v1.XmlPullParser
@@ -19,29 +21,32 @@ import java.util.*
 class RSSParser(
     private var c: Context,
     private var `is`: InputStream,
-    private var rc: RecyclerView
+    private var rc: RecyclerView,
+    private var tv: TextView,
+    private val onItemClickListener: (String) -> Unit
 ) :
     AsyncTask<Void?, Void?, Boolean>() {
-    private var pd: ProgressDialog? = null
     private var items: ArrayList<RssItem> = ArrayList<RssItem>()
     override fun onPreExecute() {
         super.onPreExecute()
-        pd = ProgressDialog(c)
-        pd!!.setTitle("Parse data")
-        pd!!.setMessage("Parsing Data...Please wait")
-        pd!!.show()
+
     }
 
 
     override fun onPostExecute(isParsed: Boolean) {
         super.onPostExecute(isParsed)
-        pd!!.dismiss()
         if (isParsed) {
-            //BIND
+            if (items.isNotEmpty()) {
+                rc.visibility = View.VISIBLE
+                rc.adapter = NewsAdapter(items, onItemClickListener)
+                rc.layoutManager = LinearLayoutManager(c)
+                rc.setHasFixedSize(true)
+            } else {
+                rc.visibility = View.GONE
+                tv.text = c.getString(R.string.news_empty)
+                tv.visibility = View.VISIBLE
+            }
 
-            rc.adapter = NewsAdapter(items, {})
-            rc.layoutManager = LinearLayoutManager(c)
-            // lv.adapter = CustomAdapter(c, articles)
         } else {
             Toast.makeText(c, "Unable To Parse", Toast.LENGTH_SHORT).show()
         }

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -17,19 +19,28 @@ import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import com.orhanobut.hawk.Hawk
 import com.yarenyarsilikal.pharmacy.network.model.CityList
+import com.yarenyarsilikal.pharmacy.network.model.User
 import com.yarenyarsilikal.pharmacy.ui.news.NewsFragment
 import com.yarenyarsilikal.pharmacy.ui.pharmacies.PharmaciesFragment
 import com.yarenyarsilikal.pharmacy.ui.profile.ProfileFragment
 import com.yarenyarsilikal.pharmacy.util.PrefUtil
+import com.yarenyarsilikal.pharmacy.util.extStartActivity
+import com.yarenyarsilikal.pharmacy.util.extToastMessage
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.InputStream
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener,
+    ProfileFragment.OnFragmentInteractionListener {
     private lateinit var viewPager: ViewPager2
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
     private lateinit var toolbar: Toolbar
+
+    private lateinit var imageViewPicture: ImageView
+    private lateinit var textViewName: TextView
+    private lateinit var textViewEmail: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,15 +77,12 @@ class MainActivity : AppCompatActivity() {
                 super.onPageSelected(position)
                 when (position) {
                     0 -> {
-                        title = resources.getString(R.string.title_news)
                         bottomNavView.menu.findItem(R.id.navigation_news).isChecked = true
                     }
                     1 -> {
-                        title = resources.getString(R.string.title_pharmacies)
                         bottomNavView.menu.findItem(R.id.navigation_pharmacies).isChecked = true
                     }
                     2 -> {
-                        title = resources.getString(R.string.title_profile)
                         bottomNavView.menu.findItem(R.id.navigation_profile).isChecked = true
                     }
                 }
@@ -96,21 +104,18 @@ class MainActivity : AppCompatActivity() {
     private fun chooseMenuItem(itemId: Int, view: View): Boolean {
         when (itemId) {
             R.id.navigation_news -> {
-                title = resources.getString(R.string.title_news)
                 viewPager.currentItem = 0
                 closeDrawer(view is NavigationView)
                 return true
             }
 
             R.id.navigation_pharmacies -> {
-                title = resources.getString(R.string.title_pharmacies)
                 viewPager.currentItem = 1
                 closeDrawer(view is NavigationView)
                 return true
             }
 
             R.id.navigation_profile -> {
-                title = resources.getString(R.string.title_profile)
                 viewPager.currentItem = 2
                 closeDrawer(view is NavigationView)
                 return true
@@ -121,12 +126,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+
+
         navView = findViewById(R.id.nav_view)
         bottomNavView = findViewById(R.id.bottomNavView)
         viewPager = findViewById(R.id.viewPager)
         drawerLayout = findViewById(R.id.drawer_layout)
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        imageButtonLogOut.setOnClickListener(this)
+        imageButtonFacebook.setOnClickListener(this)
+        imageButtonInstagram.setOnClickListener(this)
+        imageButtonTwitter.setOnClickListener(this)
         val toggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -136,6 +147,10 @@ class MainActivity : AppCompatActivity() {
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+        imageViewPicture = navView.getHeaderView(0).findViewById(R.id.imageViewPicture)
+        textViewName = navView.getHeaderView(0).findViewById(R.id.textViewName)
+        textViewEmail = navView.getHeaderView(0).findViewById(R.id.textViewEmail)
+        setNavHeaderData(PrefUtil.getUser())
     }
 
     private fun closeDrawer(boolean: Boolean) {
@@ -152,7 +167,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.itemId
         return if (id == R.id.logout) {
-            // TODO: cikis yap
+            logOut()
             true
         } else super.onOptionsItemSelected(item)
     }
@@ -188,6 +203,35 @@ class MainActivity : AppCompatActivity() {
         }
 
         return null
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            imageButtonLogOut.id -> logOut()
+            imageButtonFacebook.id -> this.extToastMessage("Facebook Adresimiz : ...........")
+            imageButtonInstagram.id -> this.extToastMessage("Instagram Adresimiz : ...........")
+            imageButtonTwitter.id -> this.extToastMessage("Twitter Adresimiz : ...........")
+        }
+    }
+
+    private fun logOut() {
+        PrefUtil.setFirstTime(true)
+        this@MainActivity extStartActivity LoginActivity::class.java
+        finish()
+    }
+
+    override fun onFragmentInteraction(msg: String) {
+        this.extToastMessage(msg)
+        viewPager.currentItem = 0
+        setNavHeaderData(PrefUtil.getUser())
+        // TODO: Profil değişikliklerini nav headerda güncelle
+    }
+
+    private fun setNavHeaderData(user: User) {
+
+        //imageViewPicture
+        textViewName.text = "${user.name} ${user.surname}"
+        textViewEmail.text = user.email
     }
 
 

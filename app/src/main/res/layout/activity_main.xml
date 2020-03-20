@@ -29,22 +29,36 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/imageButtonTwitter"
+
                 android:layout_width="@dimen/xlarge"
                 android:layout_height="@dimen/xlarge"
                 android:layout_margin="@dimen/medium"
                 android:background="@drawable/ic_twitter" />
 
             <ImageButton
+                android:id="@+id/imageButtonFacebook"
+
                 android:layout_width="@dimen/xlarge"
                 android:layout_height="@dimen/xlarge"
                 android:layout_margin="@dimen/medium"
                 android:background="@drawable/ic_facebook" />
 
             <ImageButton
+                android:id="@+id/imageButtonInstagram"
                 android:layout_width="@dimen/xlarge"
                 android:layout_height="@dimen/xlarge"
                 android:layout_margin="@dimen/medium"
                 android:background="@drawable/ic_instagram" />
+
+            <ImageButton
+                android:id="@+id/imageButtonLogOut"
+                android:layout_width="@dimen/xlarge"
+                android:layout_height="@dimen/xlarge"
+                android:layout_margin="@dimen/medium"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_exit"
+                android:tint="@color/colorPrimary" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 

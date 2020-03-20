@@ -1,8 +1,8 @@
 package com.yarenyarsilikal.pharmacy.network.rss
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.os.AsyncTask
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.yarenyarsilikal.pharmacy.network.rss.Connector.connect
@@ -15,27 +15,25 @@ import java.net.HttpURLConnection
 class Downloader(
     var c: Context,
     var urlAddress: String,
-    var rc: RecyclerView
+    private var rc: RecyclerView,
+    private val tv: TextView,
+    private val onItemClickListener: (String) -> Unit
 ) :
     AsyncTask<Void?, Void?, Any>() {
-    var pd: ProgressDialog? = null
     override fun onPreExecute() {
         super.onPreExecute()
-        pd = ProgressDialog(c)
-        pd!!.setTitle("Fetch data")
-        pd!!.setMessage("Fetching Data...Please wait")
-        pd!!.show()
+
     }
 
 
     override fun onPostExecute(data: Any) {
         super.onPostExecute(data)
-        pd!!.dismiss()
+
         if (data.toString().startsWith("Error")) {
             Toast.makeText(c, data.toString(), Toast.LENGTH_SHORT).show()
         } else {
             //PARSE
-            RSSParser(c, data as InputStream, rc).execute()
+            RSSParser(c, data as InputStream, rc, tv, onItemClickListener).execute()
         }
     }
 

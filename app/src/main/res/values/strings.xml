@@ -15,9 +15,22 @@
     <string name="menu_profile">Profil</string>
 
     <string name="title_logout">Çıkış Yap</string>
+    <string name="title_back">Geri</string>
+
     <string name="pharmacy_empty">Eczane Bulunamadı.</string>
     <string name="news_empty">Haber Bulunamadı.</string>
-    <string name="general.close">Kapat</string>
+    <string name="general_close">Kapat</string>
     <string name="choose_city">İl-İlçe Seçiniz</string>
+    <string name="edit">Düzenle</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_name">İsim</string>
+    <string name="hint_surname">Soyisim</string>
+    <string name="hint_password">Parola</string>
+
+
+    <string name="login">Giriş Yap</string>
+    <string name="register">Kaydol</string>
+    <string name="done">bittti</string>
+
 
 </resources>
